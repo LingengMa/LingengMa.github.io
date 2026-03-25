@@ -2,3 +2,6 @@ public/
 resources/
 .hugo_build.lock
 prompt.md
+
+# 字体源文件（完整版约 17MB，由 scripts/gen_fonts.py 从系统字体生成子集）
+# static/fonts/ 中的 woff2 子集文件应提交到仓库（仅约 45KB 每个）

@@ -29,13 +29,16 @@ theme = 'inkwell'
     zh_name = "日志"
     link = "/changelog/"
 
-  # 首页社交链接（使用 Nerd Font 图标，需主题字体支持）
+  # 首页社交链接（svg 字段填写 /svg/ 目录下的图标路径）
   [[params.socials]]
-    emoji = "󰇮"
-    link = "LingengMa@qq.com"
+    svg   = "/svg/email.svg"
+    label = "Email"
+    link  = "mailto:LingengMa@qq.com"
   [[params.socials]]
-    emoji = ""
-    link = "https://github.com/LingengMa"
+    svg   = "/svg/github.svg"
+    label = "GitHub"
+    link  = "https://github.com/LingengMa"
   [[params.socials]]
-    emoji = ""
-    link = "/index.xml"
+    svg   = "/svg/rss.svg"
+    label = "RSS"
+    link  = "/index.xml"

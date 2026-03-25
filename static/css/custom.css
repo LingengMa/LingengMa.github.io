@@ -1,0 +1,8 @@
+/* 社交图标 SVG 尺寸与颜色 */
+.social-svg-icon {
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: middle;
+  /* 继承文字颜色，使图标在深色/浅色模式下自动适配 */
+  filter: var(--svg-color-filter, none);
+}

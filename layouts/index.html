@@ -5,7 +5,13 @@
 
   <div class='homepage-socials'>
     {{ range .Site.Params.socials }}
-    <a class='homepage-social-item' href="{{ .link }}"> {{- .emoji -}} </a>
+    <a class='homepage-social-item' href="{{ .link }}">
+      {{- if .svg -}}
+      <img src="{{ .svg }}" alt="{{ .label }}" class="social-svg-icon">
+      {{- else -}}
+      {{- .emoji -}}
+      {{- end -}}
+    </a>
     {{ end }}
   </div>
 
