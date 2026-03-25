@@ -1,0 +1,10 @@
+{{- if .Scratch.Get "sidenotes" -}}
+<div class="sidenotes-container">
+  {{- range .Scratch.Get "sidenotes" -}}
+  <div class="sidenote" id="sidenote-{{ .num }}" data-note="{{ .num }}">
+    <div class="sidenote-marker">[{{ .num }}]</div>
+    <div class="sidenote-content">{{ .content | markdownify }}</div>
+  </div>
+  {{- end -}}
+</div>
+{{- end -}}

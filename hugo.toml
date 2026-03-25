@@ -1,0 +1,41 @@
+baseURL = 'https://LingengMa.github.io/'
+languageCode = 'zh-cn'
+title = "LingengMa's blog"
+theme = 'inkwell'
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+
+[params]
+  sitename = "LingengMa's blog"
+  description = "LingengMa 的个人博客，记录技术学习与生活随笔"
+  [params.author]
+    name = "LingengMa"
+    email = "your@email.com"
+  contact = "<p>Hi，我是 LingengMa。欢迎访问我的博客！</p>"
+
+  # 导航栏分区
+  [[params.sections]]
+    zh_name = "首页"
+    link = "/"
+  [[params.sections]]
+    zh_name = "博客"
+    link = "/posts/"
+  [[params.sections]]
+    zh_name = "关于"
+    link = "/about/"
+  [[params.sections]]
+    zh_name = "日志"
+    link = "/changelog/"
+
+  # 首页社交链接（使用 Nerd Font 图标，需主题字体支持）
+  [[params.socials]]
+    emoji = "󰇮"
+    link = "mailto:your@email.com"
+  [[params.socials]]
+    emoji = ""
+    link = "https://github.com/LingengMa"
+  [[params.socials]]
+    emoji = ""
+    link = "/index.xml"

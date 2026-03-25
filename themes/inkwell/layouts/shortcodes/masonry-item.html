@@ -1,0 +1,48 @@
+{{- $image := .Get "image" -}}
+{{- $title := .Get "title" -}}
+{{- $date := .Get "date" -}}
+{{- $tags := .Get "tags" -}}
+{{- $class := .Get "class" | default "" -}}
+{{- $max_width := .Get "max-width" -}}
+
+<div class="masonry-item {{ $class }}"
+     {{- if $max_width -}}
+     style="{{- if $max_width -}}max-width: {{ $max_width }};{{- end -}}"
+     {{- end -}}>
+  {{- if $image -}}
+    <img src="{{ $image }}"
+         loading="lazy"
+         class="masonry-image"
+    >
+  {{- end -}}
+
+  {{- if or $title $date $tags .Inner -}}
+  <div class="content">
+    {{- if $title -}}
+      <b>{{ $title }}</b>
+      <br>
+    {{- end -}}
+
+    {{- if .Inner -}}
+      {{ .Inner | markdownify }}
+    {{- end -}}
+
+    {{- if or $date $tags -}}
+      <div class="meta">
+        {{- if $date -}}
+          <span class="date">{{ $date }}</span>
+        {{- end -}}
+
+        {{- if gt (len (.Get "tags")) 0 -}}
+          <div class="tags">
+            {{- $tags := split $tags "," -}}
+            {{- range $tags -}}
+              <span class="tag">{{ . | strings.TrimSpace }}</span>
+            {{- end -}}
+          </div>
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </div>
+  {{- end -}}
+</div>

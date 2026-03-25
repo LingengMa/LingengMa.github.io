@@ -1,0 +1,12 @@
+{{- $columns := .Get "columns" | default 3 -}}
+{{- $gap := .Get "gap" | default "20px" -}}
+{{- $class := .Get "class" | default "" -}}
+<div class="masonry-container {{ $class }}">
+  <div class="masonry-columns" style="--columns: {{ $columns }};">
+    {{ .Inner }}
+  </div>
+</div>
+
+{{- if not (.Page.Scratch.Get "reliable-masonry-css-loaded") -}}
+{{ .Page.Scratch.Set "reliable-masonry-css-loaded" true }}
+{{- end -}}

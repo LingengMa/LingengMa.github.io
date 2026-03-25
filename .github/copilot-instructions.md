@@ -1,0 +1,100 @@
+# Copilot Instructions
+
+## Project Overview
+
+Personal static blog deployed at `https://LingengMa.github.io/`. Built with Hugo + [inkwell](https://github.com/rqdmap/inkwell) theme (git submodule). Published via GitHub Actions to GitHub Pages.
+
+## Build & Preview Commands
+
+```sh
+# Local dev server (with drafts)
+hugo server -D
+
+# Production build → public/
+hugo --minify
+
+# After cloning (submodule required)
+git submodule update --init --recursive
+```
+
+## Repository Structure
+
+```
+content/
+  posts/          # Blog articles (博客)
+  about/          # About page (关于) — _index.md acts as a single page
+  changelog/      # Site changelog (日志) — _index.md with git log
+assets/
+  gitlog.json         # Git commit history for homepage heatmap
+  gitlog-details.json # Per-article git log (keyed by front matter `id`)
+static/
+  me.png              # Avatar — used on homepage and contact section
+  favicon_io/         # Favicon files (replace with your own)
+  site.webmanifest
+layouts/
+  index.html                  # Overrides theme's hardcoded homepage title
+  partials/footer.html        # Overrides theme's hardcoded copyright name
+themes/inkwell/     # Git submodule — do not edit
+docs/               # Project documentation (NOT Hugo output)
+.github/workflows/deploy.yml  # GitHub Actions build & deploy
+```
+
+## Key Configuration Conventions
+
+The inkwell theme does **not** use Hugo's standard `[menu]` system. Navbar links are controlled by `params.sections`:
+
+```toml
+[[params.sections]]
+  zh_name = "博客"
+  link = "/posts/"
+  # external = true  # optional: opens in new tab style
+```
+
+The `params.author` must be a **table** (not a string) for RSS to work:
+
+```toml
+[params.author]
+  name = "LingengMa"
+  email = "your@email.com"
+```
+
+## Content Front Matter
+
+```yaml
+---
+title: "文章标题"
+date: 2024-01-01T00:00:00+08:00
+lastmod: 2024-01-01T00:00:00+08:00
+draft: false
+tags: ["tag1"]
+categories: ["分类"]
+---
+```
+
+`lastmod` drives the "修改时间" sort option in the navbar.
+
+## GitHub Actions Deployment
+
+Push to `master` triggers `.github/workflows/deploy.yml`. The workflow:
+1. Checks out with `submodules: recursive`
+2. Builds with `peaceiris/actions-hugo@v3` (extended, v0.158.0)
+3. Uploads `public/` and deploys via `actions/deploy-pages@v4`
+
+**Required repo setting**: Settings → Pages → Source = **GitHub Actions** (not a branch).
+
+## inkwell Theme Features
+
+- **KaTeX** math: `$inline$` / `$$block$$`
+- **Masonry gallery**: `{{< masonry >}}` / `{{< masonry-item >}}` shortcodes
+- **Sidenotes**: `{{< sidenote >}}` shortcode
+- **Encrypted posts**: `{{< hugo-encryptor >}}` shortcode
+- **Client-side search**: built into navbar (no config needed)
+- **Homepage heatmap**: reads `assets/gitlog.json` — keep this file updated when writing post-processing scripts
+- **Per-article git log**: reads `assets/gitlog-details.json`, matched by `id` field in front matter
+
+## Important Notes
+
+- `public/` is gitignored — Hugo build output is never committed; CI handles publishing
+- `docs/` is for human-readable project documentation, not Hugo output
+- Layout overrides in `layouts/` take precedence over theme; currently overrides `index.html` and `partials/footer.html` to replace hardcoded author/title strings
+- The `about` and `changelog` sections use `_index.md` (list pages) rendered as single-page style by the theme's custom list layouts

@@ -1,0 +1,16 @@
+{{/* 初始化或获取 sidenotes 数组 */}}
+{{- $currentNotes := $.Page.Scratch.Get "sidenotes" -}}
+{{- if not $currentNotes -}}
+  {{- $currentNotes = slice -}}
+{{- end -}}
+
+{{/* 获取当前注释编号 */}}
+{{- $num := add (len $currentNotes) 1 -}}
+
+{{/* 在文章中显示的标记 - 添加 ID */}}
+<sup class="sidenote-ref" id="sidenote-ref-{{ $num }}" data-ref="{{ $num }}">[{{ $num }}]</sup>
+
+{{/* 创建新注释并添加到列表 */}}
+{{- $newNote := dict "num" $num "content" .Inner -}}
+{{- $updatedNotes := $currentNotes | append $newNote -}}
+{{- $.Page.Scratch.Set "sidenotes" $updatedNotes -}}

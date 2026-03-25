@@ -1,0 +1,33 @@
+{{ $size := 12 }}
+{{ $isFold := "false" }}
+{{ $supportFold := "false" }}
+{{ $lineNumber := len (split .Inner "\n")}}
+{{ if gt $lineNumber 15 }}
+  {{ $supportFold = "true" }}
+  {{ if eq true (index .Attributes "fold") }}
+    {{ $isFold = "true" }}
+  {{ end }}
+{{ end }}
+{{ $uniqueId := printf "codeblock-%s-%d-%d" (.Page.File.UniqueID | default "page") .Ordinal (now.UnixMilli) }}
+<div class="codeblock" id='{{ $uniqueId }}'>
+<div class="codetype"> 
+  {{ if .Type }}
+    {{ .Type }}
+  {{ else }}
+    Text
+  {{ end }}
+</div>
+<div class='codeblock-tool-container'>
+<button class='codeblock-tool copy-button' onclick="copyCode('{{ $uniqueId }}')">  </button>
+<button class='codeblock-tool check-button codeblock-tool-hidden'> 󰄬 </button>
+</div>
+<div
+{{- if eq "true" $supportFold }}
+{{- if eq "true" $isFold }} class="codeblock-fold" 
+{{ else }} class='codeblock-unfold' {{ end -}}
+onclick="toggleFold('{{ $uniqueId }}')"
+{{ end -}}
+>
+{{ transform.Highlight .Inner .Type .Options }}
+</div>
+</div>
